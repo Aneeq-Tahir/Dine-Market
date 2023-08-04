@@ -1,20 +1,15 @@
 import Slider from "./Slider";
 import { client } from "../../../sanity/lib/client";
-import { Image } from "sanity";
+import { Image as IImage } from "sanity";
 
-export interface Products {
+export interface IProducts {
    name: string;
    _id: string;
    price: number;
-   img: Image;
-   category: string
+   img: IImage;
+   category: string;
+   relImgs: IImage[];
 }
-
-export const changeName = (arg: string) => {
-   const lowerCase = arg.toLowerCase();
-   const lowerCaseDashes = lowerCase.replace(/\s+/g, "-");
-   return lowerCaseDashes;
-};
 
 const getProducts = async () => {
    const res = await client.fetch('*[_type=="product"]');
@@ -22,7 +17,7 @@ const getProducts = async () => {
 };
 
 const Products = async () => {
-   const p: Products[] = await getProducts();
+   const p: IProducts[] = await getProducts();
 
    return (
       <>
@@ -30,7 +25,7 @@ const Products = async () => {
             <h1 className="font-bold text-3xl text-center">
                Check Our Products
             </h1>
-            <Slider products={p}/>
+            <Slider products={p} />
          </section>
       </>
    );

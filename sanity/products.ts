@@ -1,11 +1,11 @@
-import { defineType, defineField } from "sanity";
+import {
+   defineType,
+   defineField,
+   defineArrayMember,
+   CustomValidatorResult,
+} from "sanity";
 
-const isCapital = (input: string) => {
-   const words = input.split(' ')
-   return words.map(word => word[0] === word[0].toUpperCase()).join
-}
-
-export const products = defineType({
+export default defineType({
    name: "product",
    type: "document",
    title: "Products",
@@ -14,10 +14,26 @@ export const products = defineType({
          name: "name",
          type: "string",
          title: "Product Name",
-      }),
-      defineField({
-         name: "url",
-         type: "slug",
+         description: "Every Word Should start with a capital letter",
+         validation: (Rule) =>
+            Rule.custom(
+               (name) =>
+                  new Promise<CustomValidatorResult>((resolve, reject) => {
+                     if (name === undefined) resolve(true);
+                     else {
+                        const words = name.split(" ");
+                        const isValid = words.every(
+                           (word) => word[0] === word[0].toUpperCase()
+                        );
+                        isValid
+                           ? resolve(true)
+                           : reject(
+                                "Every word should start with a Capital letter"
+                             );
+                     }
+                  })
+            ),
+         // .error("Every word should start with a Capital letter"),
       }),
       defineField({
          name: "price",
@@ -27,25 +43,24 @@ export const products = defineType({
       defineField({
          name: "img",
          type: "image",
-         title: "Image",
+         title: "Main Image",
       }),
       defineField({
          name: "category",
-         type: "string",
+         type: "reference",
          title: "Category",
-         options: {
-            list: [
-               { value: "female", title: "Female" },
-               { value: "male", title: "Male" },
-               { value: "kids", title: "Kids" },
-            ],
-         },
+         to: [{ type: "category" }],
+      }),
+      defineField({
+         name: "description",
+         type: "text",
+         title: "Product Description",
       }),
       defineField({
          name: "relImgs",
          type: "array",
          title: "Related Images",
-         of: [{ type: "image" }],
+         of: [defineArrayMember({ name: "img", type: "image" })],
       }),
    ],
 });
