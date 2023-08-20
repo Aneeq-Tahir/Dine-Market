@@ -14,7 +14,7 @@ export default defineType({
          name: "name",
          type: "string",
          title: "Product Name",
-         description: "Every Word Should start with a capital letter",
+         description: "Every Word must start with a capital letter",
          validation: (Rule) =>
             Rule.custom(
                (name) =>
@@ -28,7 +28,7 @@ export default defineType({
                         isValid
                            ? resolve(true)
                            : reject(
-                                "Every word should start with a Capital letter"
+                                "Every word must start with a Capital letter"
                              );
                      }
                   })
