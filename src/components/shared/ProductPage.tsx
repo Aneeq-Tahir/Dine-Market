@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSize, changeState } from "@/redux/features/counter/cartSlice";
+import { changeSize, addProduct } from "@/redux/features/cart/cartSlice";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import Image from "next/image";
 import { urlForImage } from "../../../sanity/lib/image";
@@ -32,7 +32,7 @@ const Size = ({ text }: { text: string }) => {
    return (
       <button
          onClick={() => dispatch(changeSize(text))}
-         className="rounded-full w-10 h-10 p-2 text-center font-bold text-xl hover:cursor-pointer shadow hover:shadow-md"
+         className="rounded-full focus:border border-gray-300 w-10 h-10 p-2 text-center font-bold text-xl hover:cursor-pointer shadow hover:shadow-md"
       >
          {text}
       </button>
@@ -42,9 +42,10 @@ const Size = ({ text }: { text: string }) => {
 const ProductPage = ({ product }: { product: IProducts }) => {
    const [image, setImage] = useState(product.img);
    const [qty, setQty] = useState(0);
-
+   // console.log(image);
+   
    const dispatch = useDispatch();
-   const size = useSelector((state: RootState) => state.cart.size)
+   const size = useSelector((state: RootState) => state.cart.size);
    return (
       <section className="py-10">
          <div className="flex flex-col md:items-center gap-6 md:flex-row">
@@ -103,18 +104,17 @@ const ProductPage = ({ product }: { product: IProducts }) => {
                   <span className="font-normal">Price: </span>${product.price}
                </h1>
                <button
-                  onClick={() =>
+                  disabled={qty > 0 && size ? false : true}
+                  onClick={() => {
                      dispatch(
-                        changeState({
+                        addProduct({
                            qty,
                            size,
-                           img: product.img,
-                           txt: product.name,
-                           price: product.price,
+                           product
                         })
-                     )
-                  }
-                  className="px-6 py-3 flex justify-center gap-1 items-center bg-stone-900 text-white"
+                     );
+                  }}
+                  className="px-6 py-3 flex disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-400 justify-center gap-1 items-center bg-stone-900 text-white"
                >
                   <span className="text-3xl">
                      <AiOutlineShoppingCart />

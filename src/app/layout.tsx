@@ -18,14 +18,14 @@ export default function RootLayout({
    children: React.ReactNode;
 }) {
    return (
-      <html lang="en">
-         <Provider>
-         <body className={`${sora.className} min-h-screen dark:bg-white`}>
-            <Navbar />
-            {children}
-            <Footer />
-         </body>
-         </Provider>
-      </html>
+      <Provider>
+         <html lang="en">
+            <body className={`${sora.className} min-h-screen dark:bg-white`}>
+               <Navbar />
+               {children}
+               <Footer />
+            </body>
+         </html>
+      </Provider>
    );
 }
