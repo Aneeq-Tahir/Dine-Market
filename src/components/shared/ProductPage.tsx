@@ -42,7 +42,6 @@ const Size = ({ text }: { text: string }) => {
 const ProductPage = ({ product }: { product: IProducts }) => {
    const [image, setImage] = useState(product.img);
    const [qty, setQty] = useState(0);
-   // console.log(image);
    
    const dispatch = useDispatch();
    const size = useSelector((state: RootState) => state.cart.size);
