@@ -12,7 +12,7 @@ export const cartTable = pgTable("cart", {
    image: text("image").notNull(),
    price: integer("price").notNull(),
    quantity: integer("quantity").notNull(),
-   totalPrice: integer("totalPrice").notNull(),
+   totalPrice: integer("totalprice").notNull(),
 });
 
 export type Cart = InferModel<typeof cartTable>;

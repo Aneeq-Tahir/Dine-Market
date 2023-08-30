@@ -1,33 +1,37 @@
-import { IProducts } from "@/components/home/Products";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import  IProduct  from "@/interface";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface IState {
    totalProducts: number;
-   quantity: number;
    size: string;
    amount: number;
-   products: RProduct[];
-}
-
-export interface RProduct extends IProducts {
-   quantity: number;
-   size: string;
-   totalPrice: number;
+   products: IProduct[];
+   status: "loading" | "succeeded" | "error" | "";
 }
 
 interface Pld {
    qty: number;
-   product: IProducts;
-   size: string;
+   product: IProduct;
+   size?: string;
 }
 
 const initialState: IState = {
    totalProducts: 0,
-   quantity: 0,
    amount: 0,
+   status: "",
    size: "",
    products: [],
 };
+
+export const fetchData = createAsyncThunk(
+   "cart/fetchData",
+   async (userId: string) => {
+      const res = await fetch(`/api/cart/${userId}`);
+      if (!res.ok) console.log("failed to fetch data from api");
+      const data = await res.json();
+      return data;
+   }
+);
 
 export const cartSlice = createSlice({
    name: "cart",
@@ -47,7 +51,7 @@ export const cartSlice = createSlice({
             state.products.push({
                ...actions.payload.product,
                quantity: actions.payload.qty,
-               size: actions.payload.size,
+               size: actions.payload.size!,
                totalPrice,
             });
          } else {
@@ -55,6 +59,17 @@ export const cartSlice = createSlice({
                existingProduct.price * actions.payload.qty;
             existingProduct.quantity += actions.payload.qty;
          }
+      },
+      decrementProduct: (state: IState, actions: PayloadAction<string>) => {
+         const existingProduct = state.products.find(
+            (v) => v._id === actions.payload
+         );
+
+         state.totalProducts--;
+         state.amount -= existingProduct!.price;
+
+         existingProduct!.quantity--;
+         existingProduct!.totalPrice! -= existingProduct?.price!;
       },
       removeProduct: (state: IState, actions: PayloadAction<string>) => {
          state.products = state.products.filter(
@@ -73,8 +88,24 @@ export const cartSlice = createSlice({
          state.size = actions.payload;
       },
    },
+   extraReducers: (builder) => {
+      builder
+         .addCase(fetchData.pending, (state) => {
+            state.status = "loading";
+         }),
+         builder.addCase(fetchData.fulfilled, (state, action) => {
+            state.products = action.payload.product;
+            state.totalProducts = action.payload.totalQuantity;
+            state.amount = action.payload.totalPrice;
+            state.status = "succeeded";
+         }),
+         builder.addCase(fetchData.rejected, (state) => {
+            state.status = "error";
+         });
+   },
 });
 
-export const { addProduct, changeSize,removeProduct } = cartSlice.actions;
+export const { addProduct, changeSize, removeProduct, decrementProduct } =
+   cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -46,6 +46,14 @@ export default defineType({
          title: "Main Image",
       }),
       defineField({
+         name: "slug",
+         type: "slug",
+         title: "URL",
+         options: {
+            source: 'name',
+         },
+      }),
+      defineField({
          name: "category",
          type: "reference",
          title: "Category",

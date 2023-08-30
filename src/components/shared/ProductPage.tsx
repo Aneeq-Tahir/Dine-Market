@@ -1,34 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { changeSize, addProduct } from "@/redux/features/cart/cartSlice";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useAppDispatch } from "@/redux/store";
+import { changeSize } from "@/redux/features/cart/cartSlice";
 import Image from "next/image";
 import { urlForImage } from "../../../sanity/lib/image";
-import { IProducts } from "../home/Products";
-import { RootState } from "@/redux/store";
-
-interface ButtonProps {
-   children: React.ReactNode;
-   onClick: React.MouseEventHandler;
-   count?: number;
-   action?: string;
-}
-
-export const Button = ({ children, onClick, count, action }: ButtonProps) => {
-   return (
-      <button
-         disabled={action === "decrement" && count === 0 ? true : false}
-         onClick={onClick}
-         className="rounded-full hover:cursor-pointer border w-10 h-10 text-center p-2 font-semibold"
-      >
-         {children}
-      </button>
-   );
-};
+import  IProduct  from "@/interface";
+import AddProduct from "../AddProduct";
 
 const Size = ({ text }: { text: string }) => {
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    return (
       <button
          onClick={() => dispatch(changeSize(text))}
@@ -39,12 +19,15 @@ const Size = ({ text }: { text: string }) => {
    );
 };
 
-const ProductPage = ({ product }: { product: IProducts }) => {
+const ProductPage = ({
+   product,
+   userId,
+}: {
+   product: IProduct;
+   userId: string;
+}) => {
    const [image, setImage] = useState(product.img);
-   const [qty, setQty] = useState(0);
-   
-   const dispatch = useDispatch();
-   const size = useSelector((state: RootState) => state.cart.size);
+
    return (
       <section className="py-10">
          <div className="flex flex-col md:items-center gap-6 md:flex-row">
@@ -87,39 +70,11 @@ const ProductPage = ({ product }: { product: IProducts }) => {
                   <Size text="L" />
                   <Size text="XL" />
                </div>
-               <div className="flex items-center gap-3">
-                  <h1 className="text-xl font-semibold">Quantity:</h1>
-                  <Button
-                     count={qty}
-                     action={"decrement"}
-                     onClick={() => setQty(qty - 1)}
-                  >
-                     -
-                  </Button>
-                  <p className="text-lg font-bold">{qty}</p>
-                  <Button onClick={() => setQty(qty + 1)}>+</Button>
-               </div>
-               <h1 className="text-3xl font-bold">
-                  <span className="font-normal">Price: </span>${product.price}
+               <h1 className="text-2xl font-normal">
+                  Price:
+                  <span className="text-2xl font-bold"> ${product.price}</span>
                </h1>
-               <button
-                  disabled={qty > 0 && size ? false : true}
-                  onClick={() => {
-                     dispatch(
-                        addProduct({
-                           qty,
-                           size,
-                           product
-                        })
-                     );
-                  }}
-                  className="px-6 py-3 flex disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-400 justify-center gap-1 items-center bg-stone-900 text-white"
-               >
-                  <span className="text-3xl">
-                     <AiOutlineShoppingCart />
-                  </span>
-                  Add To Cart
-               </button>
+               <AddProduct product={product} userId={userId} />
             </div>
          </div>
       </section>

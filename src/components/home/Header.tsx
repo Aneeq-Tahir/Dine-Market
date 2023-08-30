@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
@@ -16,12 +17,15 @@ const Header = () => {
                   Anyone can beat you but no one can beat your outfit as long as
                   you wear Dine outfits
                </p>
-               <button className="bg-stone-900 text-white text-base px-7 py-3 flex items-center gap-2 transition-all hover:scale-[1.05] hover:shadow-xl">
+               <Link
+                  href={"/products"}
+                  className="bg-stone-900 text-white text-base px-7 py-3 inline-flex items-center gap-2 transition-all hover:scale-[1.05] hover:shadow-xl"
+               >
                   <span className="text-3xl">
                      <AiOutlineShoppingCart />
                   </span>
                   Start Shopping
-               </button>
+               </Link>
                <div className="grid grid-cols-4 gap-x-10 gap-y-4">
                   <div className="col-span-2 md:col-span-1">
                      <Image

@@ -1,6 +1,7 @@
 import Wrapper from "@/components/shared/Wrapper";
 import { client } from "../../../../sanity/lib/client";
 import ProductPage from "@/components/shared/ProductPage";
+import { auth } from "@clerk/nextjs";
 
 const slugToCaps = (arg: string) => {
    const words = arg.split("-");
@@ -19,10 +20,11 @@ const getImages = async (arg: string) => {
 const Page = async ({ params }: { params: { products: string } }) => {
    const { products } = params;
    const [p] = await getImages(products);
+   const { userId } = auth();
 
    return (
       <Wrapper>
-         <ProductPage product={p} />
+         <ProductPage userId={userId as string} product={p} />
       </Wrapper>
    );
 };

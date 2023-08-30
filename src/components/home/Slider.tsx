@@ -3,7 +3,7 @@ import Card from "../shared/Card";
 import dynamic from "next/dynamic";
 const Carousel = dynamic(() => import("react-multi-carousel"), { ssr: false });
 import "react-multi-carousel/lib/styles.css";
-import { IProducts } from "./Products";
+import IProduct  from "@/interface";
 
 export const responsive = {
    desktop: {
@@ -20,7 +20,7 @@ export const responsive = {
    },
 };
 
-const Slider = ({ products }: { products: IProducts[] }) => {
+const Slider = ({ products }: { products: IProduct[] }) => {
    return (
       <>
          <Carousel
@@ -36,7 +36,7 @@ const Slider = ({ products }: { products: IProducts[] }) => {
          >
             {products.map((v) => {
                return (
-                  <Card key={v._id} img={v.img} name={v.name} price={v.price} />
+                  <Card key={v._id} img={v.img} name={v.name} price={v.price} url={v.slug.current} />
                );
             })}
          </Carousel>

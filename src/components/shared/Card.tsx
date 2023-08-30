@@ -1,22 +1,23 @@
 import Image from "next/image";
-import { Image as IImage} from "sanity";
+import { Image as IImage } from "sanity";
 import { urlForImage } from "../../../sanity/lib/image";
 import Link from "next/link";
 
-const slugify = (arg: string) => {
-   return arg.toLowerCase().replace(/\s+/g, "-");
-};
+// const slugify = (arg: string) => {
+//    return arg.toLowerCase().replace(/\s+/g, "-");
+// };
 
 interface CardType {
    img: IImage;
    price: number;
    name: string;
+   url: string;
 }
 
-const Card = ({ img, price, name }: CardType) => {
+const Card = ({ img, price, name, url }: CardType) => {
    return (
       <>
-         <Link href={`/products/${slugify(name)}`}>
+         <Link href={`/products/${url}`}>
             <div className="flex shadow-lg rounded-lg hover:shadow-xl flex-col mx-4 transition-all hover:scale-[1.06]">
                <Image
                   width={350}

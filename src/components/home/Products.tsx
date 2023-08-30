@@ -1,15 +1,6 @@
 import Slider from "./Slider";
 import { client } from "../../../sanity/lib/client";
-import { Image as IImage } from "sanity";
-
-export interface IProducts {
-   name: string;
-   _id: string;
-   price: number;
-   img: IImage;
-   category: string;
-   relImgs: IImage[];
-}
+import  IProduct  from "@/interface";
 
 const getProducts = async () => {
    const res = await client.fetch('*[_type=="product"]');
@@ -17,7 +8,7 @@ const getProducts = async () => {
 };
 
 const Products = async () => {
-   const p: IProducts[] = await getProducts();
+   const p: IProduct[] = await getProducts();
 
    return (
       <>
