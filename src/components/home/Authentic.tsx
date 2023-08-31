@@ -25,7 +25,7 @@ const Authentic = () => {
                      care. The Natural color is the actual natural color of the
                      fiber, undyed and 100% traceable.
                   </p>
-                  <Link href='/products' className="p-2 w-32 bg-stone-900 text-white transition-all hover:scale-[1.05] hover:shadow-xl">
+                  <Link href='/products' className="p-2 w-32 bg-stone-900 text-white text-center transition-all hover:scale-[1.05] hover:shadow-xl">
                      See All Products
                   </Link>
                </div>
