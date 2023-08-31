@@ -3,13 +3,13 @@ import IProduct from "@/interface";
 import Card from "@/components/shared/Card";
 import Wrapper from "@/components/shared/Wrapper";
 
-export async function generateStaticParams() {
-   const products = await client.fetch("*[_type=='product']{slug}");
+// export async function generateStaticParams() {
+//    const products = await client.fetch("*[_type=='product']{slug}");
 
-   return products.map((product: { slug: { current: string } }) => ({
-      slug: product.slug.current,
-   }));
-}
+//    return products.map((product: { slug: { current: string } }) => ({
+//       slug: product.slug.current,
+//    }));
+// }
 
 const getProducts = async (arg: string) => {
    const res =

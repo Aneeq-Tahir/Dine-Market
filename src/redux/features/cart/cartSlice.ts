@@ -94,7 +94,7 @@ export const cartSlice = createSlice({
             state.status = "loading";
          }),
          builder.addCase(fetchData.fulfilled, (state, action) => {
-            state.products = action.payload.product;
+            state.products = action.payload.cartItems;
             state.totalProducts = action.payload.totalQuantity;
             state.amount = action.payload.totalPrice;
             state.status = "succeeded";
