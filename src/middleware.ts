@@ -10,12 +10,12 @@ export default authMiddleware({
       "/kids",
       "/api/webhook:path*",
       "/studio:path*",
-      "/api/cart:path*",
    ],
 });
 
 export const config = {
    matcher: [
+      "/api/cart:path*",
       "/((?!.*\\..*|_next).*)",
       "/",
       "/(api|trpc)(.*)",
