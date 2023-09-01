@@ -4,18 +4,18 @@ export default authMiddleware({
    publicRoutes: [
       "/",
       '/cart',
-      "/products:path*",
+      "/products/:path*",
       "/female",
       "/male",
       "/kids",
-      "/api/webhook:path*",
-      "/studio:path*",
+      "/api/webhook/:path*",
+      "/studio/:path*",
    ],
 });
 
 export const config = {
    matcher: [
-      "/api/cart:path*",
+      "/api/cart/:path*",
       "/((?!.*\\..*|_next).*)",
       "/",
       "/(api|trpc)(.*)",
