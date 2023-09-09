@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/redux/store";
 import { changeSize } from "@/redux/features/cart/cartSlice";
 import Image from "next/image";
 import { urlForImage } from "../../../sanity/lib/image";
-import  IProduct  from "@/interface";
+import IProduct from "@/interface";
 import AddProduct from "../AddProduct";
 
 const Size = ({ text }: { text: string }) => {
@@ -12,7 +12,7 @@ const Size = ({ text }: { text: string }) => {
    return (
       <button
          onClick={() => dispatch(changeSize(text))}
-         className="rounded-full focus:border border-gray-300 w-10 h-10 p-2 text-center font-bold text-xl hover:cursor-pointer shadow hover:shadow-md"
+         className={`rounded-full w-10 focus:bg-black focus:text-white h-10 p-2 text-center font-bold text-xl hover:cursor-pointer shadow hover:shadow-md`}
       >
          {text}
       </button>
