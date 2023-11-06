@@ -94,9 +94,8 @@ const AddProduct = ({
          </div>
 
          <button
-            disabled={qty > 0 && size ? false : true}
             onClick={addToCart}
-            className="px-6 py-3 flex disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-400 justify-center gap-1 items-center bg-stone-900 text-white"
+            className="px-6 py-3 flex justify-center gap-1 items-center bg-stone-900 text-white"
          >
             <span className="text-3xl">
                <AiOutlineShoppingCart />
