@@ -3,6 +3,7 @@
 ## Description
 
 Dine Market is a Full Stack Next.js practice project.
+Go to (https://dine-market-aneeq-tahir.vercel.app/) to visit the website
 
 ## Technologies Used
 
