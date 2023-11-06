@@ -1,4 +1,4 @@
-# Dine Market
+<h1 align="center"> Dine Market </h1>
 
 ## Description
 
